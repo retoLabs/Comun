@@ -130,8 +130,63 @@ function ajaxCmdShell(params,cmdPar,async) {
    xhr.send(utils.o2s(cmdPar));
 }
 
+//=================================================================== Operaciones
+function ecoGrabaTopol(xhr){
+	console.log('Eco grabaTopol: ' + xhr.responseText);
+	if (utils.vgk.fnEco) utils.vgk.fnEco(xhr);
+}
+
+function grabaTopol(topol,eco){
+	utils.vgk.fnEco = eco;
+	var params = vgApp.paramsXHR;
+	params.base = '/datos/';
+	params.eco = ecoGrabaTopol; 
+	params.txt = utils.o2s(utils.vgk.topol.clase2ObjDB());
+	ajaxPostTopol(params);
+}
+
+function ecoListaTopol(xhr){
+	var objs = JSON.parse(xhr.responseText);
+	if (objs.length > 0){
+		if (utils.vgk.fnEco) utils.vgk.fnEco(objs);
+	}
+	else {
+		alert('No hay topologias de este tipo !');
+		return;
+	}
+}
+
+function listaTopols(iam,eco){
+	utils.vgk.fnEco = eco;
+	var params = vgApp.paramsXHR;
+	params.base = '/metasByOrg/';
+	params.eco = ecoListaTopol;
+	params.iam = iam;
+	params.org = utils.vgk.user.org;
+	ajaxGetMetasByOrg(params);
+}
+
+function ecoGet1Topol(xhr){
+	console.log(xhr.responseText);
+	var objDB = JSON.parse(xhr.responseText);
+	if (utils.vgk.fnEco) utils.vgk.fnEco(objDB);
+}
+
+function getTopol(_id,eco){
+	utils.vgk.fnEco = eco;
+	var params = vgApp.paramsXHR;
+	params.base = '/datos/';
+	params.eco = ecoGet1Topol;
+	params.topolId = _id;
+	ajaxGet1Topol(params);
+
+	return false;
+}
+
 export default {
-	creaXHR,
-	ajaxCmdShell,
-	ajaxGetAll,ajaxGetMetas,ajaxGetMetasByOrg,ajaxGet1Topol,
-	ajaxPostTopol,ajaxPutTopol,ajaxDeleteTopol,ajaxDuplicaTopol}
+	grabaTopol,listaTopols,getTopol
+//	creaXHR,
+//	ajaxCmdShell,
+//	ajaxGetAll,ajaxGetMetas,ajaxGetMetasByOrg,ajaxGet1Topol,
+//	ajaxPostTopol,ajaxPutTopol,ajaxDeleteTopol,ajaxDuplicaTopol
+}
