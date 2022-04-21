@@ -131,6 +131,22 @@ function ajaxCmdShell(params,cmdPar,async) {
 }
 
 //=================================================================== Operaciones
+function ecoUpdateTopol(xhr){
+	console.log('Eco updateTopol: ' + xhr.responseText);
+	if (utils.vgk.fnEco) utils.vgk.fnEco(xhr);
+}
+
+function updateTopol(topol,topolId,eco){
+	utils.vgk.fnEco = eco;
+	var params = vgApp.paramsXHR;
+	params.base = '/datos/';
+	params.eco = ecoUpdateTopol; 
+	params.topolId = topolId;
+	params.txt = utils.o2s(topol.clase2ObjDB());
+	ajaxPutTopol(params);
+}
+
+
 function ecoGrabaTopol(xhr){
 	console.log('Eco grabaTopol: ' + xhr.responseText);
 	if (utils.vgk.fnEco) utils.vgk.fnEco(xhr);
@@ -144,6 +160,22 @@ function grabaTopol(topol,eco){
 	params.txt = utils.o2s(utils.vgk.topol.clase2ObjDB());
 	ajaxPostTopol(params);
 }
+
+function ecoBorraTopol(xhr){
+	console.log('Eco borraTopol: ' + xhr.responseText);
+	if (utils.vgk.fnEco) utils.vgk.fnEco(xhr);
+}
+
+function borraTopol(_id,eco){
+	utils.vgk.fnEco = eco;
+	var params = vgApp.paramsXHR;
+	params.base = '/datos/';
+	params.eco = ecoBorraTopol; 
+	params.topolId = _id;
+	ajaxDeleteTopol(params);
+}
+
+
 
 function ecoListaTopol(xhr){
 	var objs = JSON.parse(xhr.responseText);
@@ -167,7 +199,6 @@ function listaTopols(iam,eco){
 }
 
 function ecoGet1Topol(xhr){
-	console.log(xhr.responseText);
 	var objDB = JSON.parse(xhr.responseText);
 	if (utils.vgk.fnEco) utils.vgk.fnEco(objDB);
 }
@@ -184,9 +215,11 @@ function getTopol(_id,eco){
 }
 
 export default {
-	grabaTopol,listaTopols,getTopol
 //	creaXHR,
-//	ajaxCmdShell,
+	ajaxCmdShell,
+	grabaTopol,borraTopol,
+	listaTopols,getTopol,
+	updateTopol
 //	ajaxGetAll,ajaxGetMetas,ajaxGetMetasByOrg,ajaxGet1Topol,
 //	ajaxPostTopol,ajaxPutTopol,ajaxDeleteTopol,ajaxDuplicaTopol
 }
