@@ -584,6 +584,36 @@ class rLista extends rTopol {
 		})
 		this.nodos = nodos;
 	}
+	subeNodo (nodo){
+		const N = nodo.num;
+		if (N == 0) return;
+
+		var aux = this.nodos[N-1];
+		this.nodos[N-1] = nodo;
+		this.index[N-1] = nodo.id0;
+		this.nodos[N] = aux;
+		this.index[N] = aux.id0;
+		nodo.num --;
+		aux.num ++;
+	}
+
+	bajaNodo (nodo){
+		const N = nodo.num;
+		if (N >= this.nodos.length) return;
+
+		var aux = this.nodos[N+1];
+		this.nodos[N+1] = nodo;
+		this.index[N+1] = nodo.id0;
+		this.nodos[N] = aux;
+		this.index[N] = aux.id0;
+		nodo.num ++;
+		aux.num --;
+	}
+	objDB2Clase(objDB){
+		super.objDB2Clase(objDB); // rTopol
+		this.meta.iam = 'rLista';
+		this.optimiza(this.nodos);
+	}
 }
 
 /*
