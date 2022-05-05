@@ -17,7 +17,6 @@ class rIds {
 }
 //-------------------------------------------------------------------Variables globales
 export var vgk = {
-	loTopol : '',		// Topología en edición
  	laZ : 0, 			// para manejar zIndex en nodos Drag	
 	idsNodo : new rIds(6,1), // generador de id0's para nodos;
 	idsSess : new rIds(9,1), // generador de id0's para sesiones;
@@ -25,36 +24,7 @@ export var vgk = {
 	GRANO : 300000, 		// 5 min * 60 * 1000 ms
 	UNDIA : 288   //  1 dia = 12 granos/h * 24 horas
 }
-//---------------- DEPRECATED---------------------------------------- Ajax XHR
-/*
-function getXHR(metodo,ruta,eco){
-	var xhr = new XMLHttpRequest();
 
-// comprobar que soporta CORS    
-	if ("withCredentials" in xhr) {
-//		console.log('withCredentials');
-      xhr.withCredentials = true;
-    } 
-	else {console.log('SIN withCredentials');}
-
-	xhr.open(metodo, ruta, true);//true:async / false : sync
-	xhr.setRequestHeader("Content-Type","application/json");
-	xhr.onreadystatechange = function() {
-//		console.log('readyState: ' + xhr.readyState);
-      if (xhr.readyState != 4) {  return; }
-      else {
-//        console.log('status: ' + xhr.status);
-		if (xhr.status == 200 ){
-          eco(xhr);
-        }
-      }
-    }
-    xhr.onerror = function() {
-      console.log('There was an error!');
-      };
-  return xhr;
-}
-*/
 //------------------------------------------------------------------- Params HTML
 function getParamsHTML(){
 	var campo;
@@ -207,4 +177,4 @@ function inputOK(formato,texto){
 	if (regexp) return regexp.test(texto);
 	else return true;
 }
-export default {vgk, r$, o2s, csv2filas, getParamsHTML,inputOK};
+export default {vgk,r$,rEl$,o2s,csv2filas,getParamsHTML,inputOK};

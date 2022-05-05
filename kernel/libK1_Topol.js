@@ -272,19 +272,6 @@ class rTopol {
 			this.addNodo(nodo);
 		}.bind(this)) ;
 	}
-
-	objDB2Clase(objDB){
-		this.meta = new rMeta();
-//		this.meta.objDB2Clase(objDB.meta);
-		this.meta.objDB2Clase(objDB.meta);
-
-		objDB.nodos.map(function(nObj){
-			if (nObj.iam){ var nodo = eval('new '+nObj.iam+'()');}
-			else var nodo = new rNodo();
-			nodo.objDB2Clase(nObj);
-			this.addNodo(nodo);
-		}.bind(this))
-	}
 	addNodo(nodo){
 		var oldId = nodo.id0;
 		while (this.index.indexOf(nodo.id0) != -1){
@@ -310,12 +297,36 @@ class rTopol {
 		if (ix == -1) return; // el id0 no se encuentra;
 		this.index.splice(ix,1);
 		this.nodos.splice(ix,1);
-
 	}
 
 	getNodos(){
 		return this.nodos;
 	}
+	getNodoById(id){
+		var ix = this.index.indexOf(parseInt(id));
+		if (ix == -1 ) return null; // no existe ese id0
+		var nodo = this.nodos[ix];
+		return nodo;
+	}
+
+	getNodoByIx(ix){
+		if (ix < 0 || ix > this.nodos.length-1 ) return null; // no existe ese ix
+		return this.nodos[ix];
+	}
+
+	objDB2Clase(objDB){
+		this.meta = new rMeta();
+//		this.meta.objDB2Clase(objDB.meta);
+		this.meta.objDB2Clase(objDB.meta);
+
+		objDB.nodos.map(function(nObj){
+			if (nObj.iam){ var nodo = eval('new '+nObj.iam+'()');}
+			else var nodo = new rNodo();
+			nodo.objDB2Clase(nObj);
+			this.addNodo(nodo);
+		}.bind(this))
+	}
+
 	clase2ObjDB(){
 		var nodosOK = [];
 		var n = this.nodos.length;
@@ -328,17 +339,7 @@ class rTopol {
 		return objDB;
 	}
 
-	getNodoById(id){
-		var ix = this.index.indexOf(parseInt(id));
-		if (ix == -1 ) return null; // no existe ese id0
-		var nodo = this.nodos[ix];
-		return nodo;
-	}
 
-	getNodoByIx(ix){
-		if (ix < 0 || ix > this.nodos.length-1 ) return null; // no existe ese ix
-		return this.nodos[ix];
-	}
 }
 
 //------------------------------------------------------------------- Class Conjt
@@ -348,6 +349,195 @@ class rConjt extends rTopol {
 		this.meta.iam = 'rConjt';
 	}
 }
+
+//------------------------------------------------------------------- Class Lista
+class rLista extends rTopol {
+	constructor(nombre,nodos){
+		super(nombre,nodos);
+		this.meta.iam = 'rLista';
+		this.optimiza(this.nodos);
+	}
+	optimiza (nodos){
+		nodos.map(function(nodo,ix){
+			nodo.num = ix;
+		})
+	}
+
+	ordena (){
+		var nodos = this.nodos.sort(function(a,b){return (a.tag > b.tag) });
+		nodos.map(function(nodo,ix){
+			nodo.num = ix;
+		})
+		this.nodos = nodos;
+	}
+
+	addNodo(nodo){
+		super.addNodo(nodo);
+		this.optimiza(this.nodos);
+	}
+	swapNodos(ixa,ixb){
+		console.log('swap',ixa,ixb);
+		var aux = this.nodos[ixb];
+		this.nodos[ixb] = this.nodos[ixa];
+		this.nodos[ixa] = aux;
+
+		this.index[ixb] = this.nodos[ixb].id0;
+		this.index[ixa] = this.nodos[ixa].id0;
+	}
+
+	subeNodo (nodo){
+		const N = nodo.num;
+		if (N <= 0) return;
+		this.swapNodos(N,N-1);
+		this.nodos[N].num ++;
+		this.nodos[N-1].num --;
+		console.log(utils.o2s(this.index));
+	}
+
+	bajaNodo (nodo){
+		const N = nodo.num;
+		if (N >= this.nodos.length-1) return;
+		this.swapNodos(N,N+1);
+		this.nodos[N].num --;
+		this.nodos[N+1].num ++;
+		console.log(utils.o2s(this.index));
+	}
+
+	objDB2Clase(objDB){
+		super.objDB2Clase(objDB); // rTopol
+		this.meta.iam = 'rLista';
+		this.optimiza(this.nodos);
+	}
+}
+
+//------------------------------------------------------------------- Class Arbol
+class rArbol extends rTopol {
+	constructor(nombre,nodos) {
+		super(nombre,nodos);
+		this.meta.iam = 'rArbol';
+		this.orfes = []
+		this.optimiza(this.nodos);
+
+	}
+// Crear hijos y poner estados EXPAN | COLAP | FULLA
+	optimiza (nodos){
+		nodos.map(function(nodo,ix){
+			nodo.stat = 'FULLA';
+			nodo.hijos = [];
+
+			if (ix > 0){ // no es el nodo [0]
+				var padre = this.getNodoById(nodo.id1);
+				if (!padre){this.orfes.push(nodo);}
+				else {
+					padre.hijos.push(nodo.id0);
+					if (padre.stat = 'FULLA') padre.stat = 'EXPAN';
+				}
+			}
+		}.bind(this));
+	}
+
+	objDB2Clase(objDB){
+		this.meta = new rMeta(objDB.meta.nombre);
+		this.meta.objDB2Clase(objDB.meta);
+
+		objDB.nodos.map(function(nObj){
+			try {var nodo = eval('new '+nObj.iam+'()');} catch (e){console.log('iam no encontrado: '+nObj.iam+' en Obj: ' + this.meta.tag );};
+			if (nodo){
+				nodo.objDB2Clase(nObj);
+				nodo.id1 = nObj.id1;
+				this.addNodo(nodo);
+			}
+		}.bind(this))
+
+		this.optimiza(this.nodos);  // para poner {stat} y {hijos}
+	}
+
+	getOrfes (){
+		return this.orfes;
+	}
+	
+	getRaiz (){
+		return this.nodos[0];
+	}
+
+	getRaspa (){
+		var raspa = [];
+		var idsRaspa = this.nodos[0].hijos;
+		idsRaspa.map(function(id){
+			var nodo = this.getNodoById(id);
+			raspa.push(nodo);
+		}.bind(this));
+		return raspa;
+	}
+
+	getHijosNodo(nodo){
+		var hijos = [];
+		nodo.hijos.map(function(idH){
+			var hijo = this.getNodoById(idH);
+			hijos.push(hijo);
+		}.bind(this));
+		return hijos;
+	}
+
+	borraHijosNodo(nodo){
+		var hijos = this.getHijosNodo(nodo);
+		hijos.map(function(hijo){
+			this.borraNodo(hijo);
+		}.bind(this))
+	}
+
+	addNodoSelf(nodo){
+		if (!this.nodos.length){
+			super.addNodo(nodo);
+			this.optimiza(this.nodos);
+		}
+		else {
+			var raiz = this.getRaiz();
+			this.addNodoHijo(raiz,nodo);
+		}
+	}
+	addNodoHijo(padre,hijo){
+		if (this.index.indexOf(padre.id0) == -1) {console.log('padre no existe !!');return;}
+		hijo.stat = 'FULLA';
+		hijo.hijos = [];
+		this.addNodo(hijo); // rTopol
+		hijo.id1 = padre.id0;
+		padre.hijos.push(hijo.id0);
+		if (padre.stat == 'FULLA')	padre.stat = 'EXPAN';
+	}
+
+
+	borraNodo(nodo){
+		var hijos = [];
+		nodo.hijos.map(function(idH){hijos.push(idH)});
+		var n = hijos.length;
+		for (var i=0;i<n;i++){
+			var nodoH = this.getNodoById(hijos[i]);
+			this.borraNodo(nodoH);
+		}
+		var padre = this.getNodoById(nodo.id1);
+		var ixH = padre.hijos.indexOf(nodo.id0);
+		padre.hijos.splice(ixH,1);
+		
+		super.borraNodo(nodo);
+	}
+
+	expandeNodo (nodo,divBase,clases,css){
+		nodo.stat = 'EXPAN';
+		divBase.innerHTML = '';
+		this.recorrePre(divBase,clases,css,this.nodos[0],0);
+
+	}
+
+	colapsaNodo (nodo,divBase,clases,css){
+		nodo.stat = 'COLAP';
+		divBase.innerHTML = '';
+		this.recorrePre(divBase,clases,css,this.nodos[0],0);
+
+	}
+
+}
+
 //------------------------------------------------------------------- Class Grafo
 class rGrafo extends rTopol {
 	constructor(nombre,nodos) {
@@ -564,265 +754,8 @@ class rGantt extends rGrafo{
 		this.meta.iam = 'rGantt';
 	}
 }
-//------------------------------------------------------------------- Class Lista
-class rLista extends rTopol {
-	constructor(nombre,nodos){
-		super(nombre,nodos);
-		this.meta.iam = 'rLista';
-		this.optimiza(this.nodos);
-	}
-	optimiza (nodos){
-		nodos.map(function(nodo,ix){
-			nodo.num = ix;
-		})
-	}
-
-	ordena (){
-		var nodos = this.nodos.sort(function(a,b){return (a.tag > b.tag) });
-		nodos.map(function(nodo,ix){
-			nodo.num = ix;
-		})
-		this.nodos = nodos;
-	}
-	subeNodo (nodo){
-		const N = nodo.num;
-		if (N == 0) return;
-
-		var aux = this.nodos[N-1];
-		this.nodos[N-1] = nodo;
-		this.index[N-1] = nodo.id0;
-		this.nodos[N] = aux;
-		this.index[N] = aux.id0;
-		nodo.num --;
-		aux.num ++;
-	}
-
-	bajaNodo (nodo){
-		const N = nodo.num;
-		if (N >= this.nodos.length) return;
-
-		var aux = this.nodos[N+1];
-		this.nodos[N+1] = nodo;
-		this.index[N+1] = nodo.id0;
-		this.nodos[N] = aux;
-		this.index[N] = aux.id0;
-		nodo.num ++;
-		aux.num --;
-	}
-	objDB2Clase(objDB){
-		super.objDB2Clase(objDB); // rTopol
-		this.meta.iam = 'rLista';
-		this.optimiza(this.nodos);
-	}
-}
-
 /*
 */
-//------------------------------------------------------------------- Class Arbol
-class rArbol extends rTopol {
-	constructor(nombre,nodos) {
-		super(nombre,nodos);
-		this.meta.iam = 'rArbol';
-		this.orfes = []
-		this.optimiza(this.nodos);
-
-	}
-// Crear hijos y poner estados EXPAN | COLAP | FULLA
-	optimiza (nodos){
-		nodos.map(function(nodo,ix){
-			nodo.stat = 'FULLA';
-			nodo.hijos = [];
-
-			if (ix > 0){ // no es el nodo [0]
-				var padre = this.getNodoById(nodo.id1);
-				if (!padre){this.orfes.push(nodo);}
-				else {
-					padre.hijos.push(nodo.id0);
-					if (padre.stat = 'FULLA') padre.stat = 'EXPAN';
-				}
-			}
-		}.bind(this));
-	}
-
-	objDB2Clase(objDB){
-		this.meta = new rMeta(objDB.meta.nombre);
-		this.meta.objDB2Clase(objDB.meta);
-
-		objDB.nodos.map(function(nObj){
-			try {var nodo = eval('new '+nObj.iam+'()');} catch (e){console.log('iam no encontrado: '+nObj.iam+' en Obj: ' + this.meta.tag );};
-			if (nodo){
-				nodo.objDB2Clase(nObj);
-				nodo.id1 = nObj.id1;
-				this.addNodo(nodo);
-			}
-		}.bind(this))
-
-		this.optimiza(this.nodos);  // para poner {stat} y {hijos}
-	}
-
-	getOrfes (){
-		return this.orfes;
-	}
-	
-	getRaiz (){
-		return this.nodos[0];
-	}
-
-	getRaspa (){
-		var raspa = [];
-		var idsRaspa = this.nodos[0].hijos;
-		idsRaspa.map(function(id){
-			var nodo = this.getNodoById(id);
-			raspa.push(nodo);
-		}.bind(this));
-		return raspa;
-	}
-
-	getHijosNodo(nodo){
-		var hijos = [];
-		nodo.hijos.map(function(idH){
-			var hijo = this.getNodoById(idH);
-			hijos.push(hijo);
-		}.bind(this));
-		return hijos;
-	}
-
-	borraHijosNodo(nodo){
-		var hijos = this.getHijosNodo(nodo);
-		hijos.map(function(hijo){
-			this.borraNodo(hijo);
-		}.bind(this))
-	}
-
-	addNodoHijo(padre,hijo){
-		if (this.index.indexOf(padre.id0) == -1) {console.log('padre no existe !!');return;}
-		hijo.stat = 'FULLA';
-		hijo.hijos = [];
-		this.addNodo(hijo); // rTopol
-		hijo.id1 = padre.id0;
-		padre.hijos.push(hijo.id0);
-		if (padre.stat == 'FULLA')	padre.stat = 'EXPAN';
-	}
-
-
-	borraNodo(nodo){
-		var hijos = [];
-		nodo.hijos.map(function(idH){hijos.push(idH)});
-		var n = hijos.length;
-		for (var i=0;i<n;i++){
-			var nodoH = this.getNodoById(hijos[i]);
-			this.borraNodo(nodoH);
-		}
-		var padre = this.getNodoById(nodo.id1);
-		var ixH = padre.hijos.indexOf(nodo.id0);
-		padre.hijos.splice(ixH,1);
-		
-		super.borraNodo(nodo);
-	}
-
-	expandeNodo (nodo,divBase,clases,css){
-		nodo.stat = 'EXPAN';
-		divBase.innerHTML = '';
-		this.recorrePre(divBase,clases,css,this.nodos[0],0);
-
-	}
-
-	colapsaNodo (nodo,divBase,clases,css){
-		nodo.stat = 'COLAP';
-		divBase.innerHTML = '';
-		this.recorrePre(divBase,clases,css,this.nodos[0],0);
-
-	}
-
-/*
-	recorrePreEdit (divBase,clases,css,nodo,nivel){
-		var divNodo = rEl$('div');
-		divNodo.style.margin = '15px';
-		divNodo.style.marginLeft = (nivel * 30)+'px';
-
-		var onOff = rEl$('input');
-		onOff.type = 'button';
-		onOff.id = ''+ nodo.id0;
-
-		var edit = rEl$('input');
-		edit.type = 'button';
-		edit.id = ''+ nodo.id0;
-		edit.addEventListener('click',function(){this.editNodo(nodo,this.showPreEdit.bind(this));}.bind(this));
-		edit.value = 'Edit';
-
-		if (nodo.stat == 'EXPAN'){
-			onOff.addEventListener('click',function(){this.colapsaNodo(nodo,divBase,clases,css);}.bind(this));
-			onOff.value = '-';
-			divNodo.appendChild(onOff);
-			}
-		else if (nodo.stat == 'COLAP'){
-			onOff.addEventListener('click',function(){this.expandeNodo(nodo,divBase,clases,css);}.bind(this));
-			onOff.value = '+';
-			divNodo.appendChild(onOff);
-			}
-
-		var div  = nodo.toDivStd(clases,css);
-
-		div.style.display = 'inline';
-		divNodo.appendChild(div);
-		divNodo.appendChild(edit);
-		divBase.appendChild(divNodo);
-		if (nodo.stat == 'EXPAN') {
-			nodo.hijos.map(function(idH){
-				var hijo = this.getNodoById(idH);
-				this.recorrePreEdit(divBase,clases,css,hijo,nivel+1);
-			}.bind(this));
-		}
-	}
-	recorrePre (divBase,clases,css,nodo,nivel){
-		var divNodo = rEl$('div');
-		divNodo.style.margin = '15px';
-		divNodo.style.marginLeft = (nivel * 30)+'px';
-//		divNodo.style.backgroundColor = 'gray';
-
-		var onOff = rEl$('input');
-		onOff.type = 'button';
-		onOff.id = ''+ nodo.id0;
-
-		if (nodo.stat == 'EXPAN'){
-			onOff.addEventListener('click',function(){this.colapsaNodo(nodo,divBase,clases,css);}.bind(this));
-			onOff.value = '-';
-			divNodo.appendChild(onOff);
-			}
-		else if (nodo.stat == 'COLAP'){
-			onOff.addEventListener('click',function(){this.expandeNodo(nodo,divBase,clases,css);}.bind(this));
-			onOff.value = '+';
-			divNodo.appendChild(onOff);
-			}
-
-		var div  = nodo.toDivStd(clases,css);
-		div.style.display = 'inline';
-		divNodo.appendChild(div);
-		divBase.appendChild(divNodo);
-		if (nodo.stat == 'EXPAN') {
-			nodo.hijos.map(function(idH){
-				var hijo = this.getNodoById(idH);
-				this.recorrePre(divBase,clases,css,hijo,nivel+1);
-			}.bind(this));
-		}
-	}
-	showPreEdit (win0,clases,css){
-		win0.show();
-		this.win0 = win0;
-		var divBase = win0.tapa;
-		this.recorrePreEdit(divBase,clases,css,this.nodos[0],0);
-		return false;
-	}
-
-	showPre (win0,clases,css){
-		win0.show();
-		this.win0 = win0;
-		var divBase = win0.tapa;
-		this.recorrePre(divBase,clases,css,this.nodos[0],0);
-		return false;
-	}
-	*/
-}
 //------------------------------------------------------------------- Class Malla
 // Pseudo Grafo. Los arcos van de un conjunto de nodos a otro
 class rMalla extends rTopol{

@@ -1,14 +1,46 @@
 App Seeds en http://localhost:3100
 Connected to Database
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a048a92141489f7dce48
+PUT: 6273a048a92141489f7dce48
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a048a92141489f7dce48
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a048a92141489f7dce48
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a048a92141489f7dce48
+PUT: 6273a048a92141489f7dce48
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a048a92141489f7dce48
+DEL: 6273a048a92141489f7dce48
+GET metas by iam/org: rArbol/DEMO01
+POST
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+PUT: 6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
 GET metas by iam/org: rLista/DEMO01
-GET by _id :626a7f8c66fc214d1bd80f38
-GET metas by iam/org: rConjt/DEMO01
-GET metas by iam/org: rLista/DEMO01
-GET by _id :626a7f8c66fc214d1bd80f38
-PUT: 626a7f8c66fc214d1bd80f38
-GET metas by iam/org: rLista/DEMO01
-GET by _id :626a7f8c66fc214d1bd80f38
-PUT: 626a7f8c66fc214d1bd80f38
-PUT: 626a7f8c66fc214d1bd80f38
-GET metas by iam/org: rLista/DEMO01
-GET by _id :626a7f8c66fc214d1bd80f38
+GET by _id :626a7f5d66fc214d1bd80f35
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rArbol/DEMO01
+GET by _id :6273a9d15fb6fc54b9a35d6f
