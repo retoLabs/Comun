@@ -132,7 +132,6 @@ function ajaxCmdShell(params,cmdPar,async) {
 
 //=================================================================== Operaciones
 function ecoUpdateTopol(xhr){
-	console.log('Eco updateTopol: ' + xhr.responseText);
 	if (utils.vgk.fnEco) utils.vgk.fnEco(xhr);
 }
 

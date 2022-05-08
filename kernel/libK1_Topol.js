@@ -309,6 +309,29 @@ class rTopol {
 		return nodo;
 	}
 
+	swapNodos(ixa,ixb){
+		console.log('swap',ixa,ixb,utils.o2s(this.index));
+		var aux = this.nodos[ixb];
+		this.nodos[ixb] = this.nodos[ixa];
+		this.nodos[ixa] = aux;
+
+		this.index[ixb] = this.nodos[ixb].id0;
+		this.index[ixa] = this.nodos[ixa].id0;
+		console.log('swap',ixa,ixb,utils.o2s(this.index));
+	}
+
+	subeNodo (nodo){
+		const N = this.index.indexOf(parseInt(nodo.id0));
+		if (N <= 0) return;
+		this.swapNodos(N,N-1);
+	}
+
+	bajaNodo (nodo){
+		const N = this.index.indexOf(parseInt(nodo.id0));
+		if (N >= this.nodos.length-1) return;
+		this.swapNodos(N,N+1);
+	}
+
 	getNodoByIx(ix){
 		if (ix < 0 || ix > this.nodos.length-1 ) return null; // no existe ese ix
 		return this.nodos[ix];
@@ -375,32 +398,15 @@ class rLista extends rTopol {
 		super.addNodo(nodo);
 		this.optimiza(this.nodos);
 	}
-	swapNodos(ixa,ixb){
-		console.log('swap',ixa,ixb);
-		var aux = this.nodos[ixb];
-		this.nodos[ixb] = this.nodos[ixa];
-		this.nodos[ixa] = aux;
 
-		this.index[ixb] = this.nodos[ixb].id0;
-		this.index[ixa] = this.nodos[ixa].id0;
+	subeNodo(nodo){
+		super.subeNodo(nodo);
+		this.optimiza(this.nodos);
 	}
 
-	subeNodo (nodo){
-		const N = nodo.num;
-		if (N <= 0) return;
-		this.swapNodos(N,N-1);
-		this.nodos[N].num ++;
-		this.nodos[N-1].num --;
-		console.log(utils.o2s(this.index));
-	}
-
-	bajaNodo (nodo){
-		const N = nodo.num;
-		if (N >= this.nodos.length-1) return;
-		this.swapNodos(N,N+1);
-		this.nodos[N].num --;
-		this.nodos[N+1].num ++;
-		console.log(utils.o2s(this.index));
+	bajaNodo(nodo){
+		super.bajaNodo(nodo);
+		this.optimiza(this.nodos);
 	}
 
 	objDB2Clase(objDB){
@@ -496,6 +502,31 @@ class rArbol extends rTopol {
 			this.addNodoHijo(raiz,nodo);
 		}
 	}
+
+	subeNodo(nodo){
+		var padre = this.getNodoById(nodo.id1);
+		var h = padre.hijos;
+		var N = h.indexOf(nodo.id0);
+		if (N==0) return;
+		var germa = h[N-1];
+		var ixA = this.index.indexOf(nodo.id0);
+		var ixB = this.index.indexOf(germa);
+		super.swapNodos(ixA,ixB);
+		this.optimiza(this.nodos);
+	}
+
+	bajaNodo(nodo){
+		var padre = this.getNodoById(nodo.id1);
+		var h = padre.hijos;
+		var N = h.indexOf(nodo.id0);
+		if (N==h.length-1) return;
+		var germa = h[N+1];
+		var ixA = this.index.indexOf(nodo.id0);
+		var ixB = this.index.indexOf(germa);
+		super.swapNodos(ixA,ixB);
+		this.optimiza(this.nodos);
+	}
+
 	addNodoHijo(padre,hijo){
 		if (this.index.indexOf(padre.id0) == -1) {console.log('padre no existe !!');return;}
 		hijo.stat = 'FULLA';
@@ -522,6 +553,7 @@ class rArbol extends rTopol {
 		super.borraNodo(nodo);
 	}
 
+/*
 	expandeNodo (nodo,divBase,clases,css){
 		nodo.stat = 'EXPAN';
 		divBase.innerHTML = '';
@@ -535,7 +567,11 @@ class rArbol extends rTopol {
 		this.recorrePre(divBase,clases,css,this.nodos[0],0);
 
 	}
-
+*/
+	commuta(nodo){
+		if (nodo.stat == 'EXPAN') nodo.stat = 'COLAP';
+		else nodo.stat = 'EXPAN';
+	}
 }
 
 //------------------------------------------------------------------- Class Grafo
