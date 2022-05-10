@@ -1,81 +1,34 @@
 App Seeds en http://localhost:3100
 Connected to Database
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
 GET metas by iam/org: rConjt/DEMO01
-GET by _id :624ea47c9168341fd5115ff8
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rLista/DEMO01
-GET by _id :626a7f5d66fc214d1bd80f35
-PUT: 626a7f5d66fc214d1bd80f35
-GET metas by iam/org: rLista/DEMO01
-GET by _id :626a7f5d66fc214d1bd80f35
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rLista/DEMO01
-GET by _id :626a7f5d66fc214d1bd80f35
-PUT: 626a7f5d66fc214d1bd80f35
-GET metas by iam/org: rLista/DEMO01
-GET by _id :626a7f5d66fc214d1bd80f35
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
-PUT: 6273a9d15fb6fc54b9a35d6f
-GET metas by iam/org: rArbol/DEMO01
-GET by _id :6273a9d15fb6fc54b9a35d6f
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200
+PUT: 62782e42b953df41ec2d8200
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :62782e42b953df41ec2d8200

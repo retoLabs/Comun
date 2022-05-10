@@ -553,21 +553,6 @@ class rArbol extends rTopol {
 		super.borraNodo(nodo);
 	}
 
-/*
-	expandeNodo (nodo,divBase,clases,css){
-		nodo.stat = 'EXPAN';
-		divBase.innerHTML = '';
-		this.recorrePre(divBase,clases,css,this.nodos[0],0);
-
-	}
-
-	colapsaNodo (nodo,divBase,clases,css){
-		nodo.stat = 'COLAP';
-		divBase.innerHTML = '';
-		this.recorrePre(divBase,clases,css,this.nodos[0],0);
-
-	}
-*/
 	commuta(nodo){
 		if (nodo.stat == 'EXPAN') nodo.stat = 'COLAP';
 		else nodo.stat = 'EXPAN';
@@ -661,9 +646,13 @@ class rGrafo extends rTopol {
 			arco.id0 = ((id0I+123) ^ id0F) + (arco.n || 0); //El 123 es para diferenciar A --> B de B--> A
 			arco.id1 = id0F;
 		}.bind(this))
-
 	}
 
+
+	
+	getArcos(){
+		return this.arcos;
+	}
 	getVecinos(nodo){
 		var veins = [];
 		this.arcos.map(function(arco){
@@ -676,6 +665,7 @@ class rGrafo extends rTopol {
 		}.bind(this))
 		return veins;
 	}
+	
 	borraNodo(nodo){
 		console.log(utils.o2s(this.index));
 		var ixNodo = this.index.indexOf(nodo.id0);
@@ -697,16 +687,8 @@ class rGrafo extends rTopol {
 		console.log(utils.o2s(this.index));
 	}
 
-	borraArco(arco){
-		var ixArco = this.iArcs.indexOf(arco.id0);
-		if (ixArco == -1) return false;
-		else {
-			this.arcos.splice(ixArco,1);
-			this.ajustaIndices();
-		}
-	}
 
-	addArco(arco){
+	addArcoSelf(arco){
 		var idx,id0,id1,ixI,ixF;
 		id0 = arco.id0;
 		id1 = arco.id1;
@@ -721,6 +703,17 @@ class rGrafo extends rTopol {
 			this.iArcs.push(arco.id0);
 		}
 		else (console.log('Arco sin Nodo'));
+
+	}
+
+
+	borraArco(arco){
+		var ixArco = this.iArcs.indexOf(arco.id0);
+		if (ixArco == -1) return false;
+		else {
+			this.arcos.splice(ixArco,1);
+			this.ajustaIndices();
+		}
 	}
 
 	getArcoById(id0){
@@ -770,6 +763,8 @@ class rGrafo extends rTopol {
 	}
 
 }
+
+
 //------------------------------------------------------------------- Class Gantt
 class rGantt extends rGrafo{
 	constructor(nombre,nodos,lapso) {
