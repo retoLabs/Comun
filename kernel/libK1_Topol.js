@@ -35,12 +35,10 @@
 		+{tag}
 		+{id0} : Apunta al {id0} del Nodo origen
 		+{id1} : Apunta al {id0} del Nodo destino
-	Otros:
-		+ {num} : para crear varios arcos entre dos nodos
 
 	Para preservar la unicidad de id0's en una topología, el {id0} del arco:
-		var id0_calc = ((id0_real + 123) ^ id1) + num;
-		var id0_real = ((id0_calc ^ id1) - 123) - num;
+		var id0_calc = ((id0_real + 123) ^ id1);
+		var id0_real = ((id0_calc ^ id1) - 123);
 
 		Nota: 123 es un número escogido arbitrariamente. 
 		Diferencia {id0_calc} entre: Arcos A-->B, y Arcos B-->A
@@ -175,17 +173,13 @@ export class rDrag extends rNodo {
 
 
 //------------------------------------------------------------------- Class Arco
-/*
-*************** OJO !!!! Invocar new rArco con n, o peta todo !!!! **
-*/
 class rArco {
-	constructor(tag,nodo0,nodo1,n){
+	constructor(tag,nodo0,nodo1){
 		this.tag = tag || 'x';
 		this.iam = 'rArco';
 		this.rol = 'ARCO';
-		this.num = n || 0; // para permitir varios arcos entre dos nodos dados
 		if (nodo0 && nodo1){
-			this.id0 = ((nodo0.id0+123) ^ nodo1.id0) + this.num; //El 123 es para diferenciar A --> B de B--> A
+			this.id0 = ((nodo0.id0+123) ^ nodo1.id0); //El 123 es para diferenciar A --> B de B--> A
 			this.id1 = nodo1.id0;
 		}
 		else {
@@ -194,21 +188,21 @@ class rArco {
 		}
 	}
 
-	setNodos(nodo0,nodo1,n){
+	setNodos(nodo0,nodo1){
 		if (nodo0 && nodo1){
-			this.id0 = ((nodo0.id0+123) ^ nodo1.id0) + (n || 0); //El 123 es para diferenciar A --> B de B--> A
+			this.id0 = ((nodo0.id0+123) ^ nodo1.id0); //El 123 es para diferenciar A --> B de B--> A
 			this.id1 = nodo1.id0;
 		}
 
 	}
 	getId0Real(){
-		return ((this.id0 ^ this.id1)-123)-this.num;
+		return ((this.id0 ^ this.id1)-123);
 	}
 
 	otroId(){
 		this.num++;
 		var idReal = this.getId0Real();
-		this.id0 = ((idReal+123) ^ this.id1) + this.num; //El 123 es para diferenciar A --> B de B--> A
+		this.id0 = ((idReal+123) ^ this.id1); //El 123 es para diferenciar A --> B de B--> A
 	}
 
 	objDB2Clase(objDB){
@@ -217,17 +211,15 @@ class rArco {
 		this.rol = 'ARCO';
 		this.id0 = objDB.id0;
 		this.id1 = objDB.id1;
-		this.num = objDB.num;
 	}
 }
 
 //------------------------------------------------------------------- Class Nudo (de Malla)
 class rNudo  extends rArco{
-	constructor(tag,nRow,nCol,n,valor){
-		super(tag,nRow,nCol,n);
+	constructor(tag,nRow,nCol,valor){
+		super(tag,nRow,nCol);
 		this.iam = 'rNudo';
 		this.rol = 'NUDO';
-		this.num = n || 0; // para permitir varios arcos entre dos nodos dados
 		this.valor = valor;
 	}
 	objDB2Clase(objDB){
@@ -371,6 +363,9 @@ class rConjt extends rTopol {
 		super(nombre,nodos);
 		this.meta.iam = 'rConjt';
 	}
+	addNodoSelf(nodo){
+		super.addNodo(nodo);
+	}
 }
 
 //------------------------------------------------------------------- Class Lista
@@ -394,7 +389,7 @@ class rLista extends rTopol {
 		this.nodos = nodos;
 	}
 
-	addNodo(nodo){
+	addNodoSelf(nodo){
 		super.addNodo(nodo);
 		this.optimiza(this.nodos);
 	}
@@ -643,7 +638,7 @@ class rGrafo extends rTopol {
 			var id0I = this.index[arco.nodoI];
 			var id0F = this.index[arco.nodoF];
 			console.log('id0I:id0F ---> '+id0I+':'+id0F);
-			arco.id0 = ((id0I+123) ^ id0F) + (arco.n || 0); //El 123 es para diferenciar A --> B de B--> A
+			arco.id0 = ((id0I+123) ^ id0F); //El 123 es para diferenciar A --> B de B--> A
 			arco.id1 = id0F;
 		}.bind(this))
 	}
@@ -653,6 +648,21 @@ class rGrafo extends rTopol {
 	getArcos(){
 		return this.arcos;
 	}
+
+	getArcoById(id0){
+		var ix = this.iArcs.indexOf(id0);
+		if (ix == -1) return null;
+		else return this.arcos[ix];
+	}
+
+	getArcoByIxs(ixI,ixF){
+		var id0I = this.index[ixI];
+		var id0F = this.index[ixF];
+		var id0 = ((id0I+123) ^ id0F); //El 123 es para diferenciar A --> B de B--> A
+		var arco = this.getArcoById(id0);
+		return arco;
+	}
+
 	getVecinos(nodo){
 		var veins = [];
 		this.arcos.map(function(arco){
@@ -716,11 +726,6 @@ class rGrafo extends rTopol {
 		}
 	}
 
-	getArcoById(id0){
-		var ix = this.iArcs.indexOf(id0);
-		if (ix == -1) return null;
-		else return this.arcos[ix];
-	}
 
 	existArco (arco){
 		if (this.iArcs.indexOf(arco.id0) != -1) return true;
