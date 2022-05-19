@@ -173,62 +173,23 @@ export class rDrag extends rNodo {
 
 
 //------------------------------------------------------------------- Class Arco
-class rArco {
-	constructor(tag,nodo0,nodo1){
-		this.tag = tag || 'x';
+class rArco extends rNodo{
+	constructor(tag,idI,idF){
+		super(tag);
 		this.iam = 'rArco';
 		this.rol = 'ARCO';
-		if (nodo0 && nodo1){
-			this.id0 = ((nodo0.id0+123) ^ nodo1.id0); //El 123 es para diferenciar A --> B de B--> A
-			this.id1 = nodo1.id0;
-		}
-		else {
-			this.id0 = 0;
-			this.id1 = 0;
-		}
+		this.idI = idI; 
+		this.idF = idF;
 	}
 
-	setNodos(nodo0,nodo1){
-		if (nodo0 && nodo1){
-			this.id0 = ((nodo0.id0+123) ^ nodo1.id0); //El 123 es para diferenciar A --> B de B--> A
-			this.id1 = nodo1.id0;
-		}
-
-	}
-	getId0Real(){
-		return ((this.id0 ^ this.id1)-123);
-	}
-
-	otroId(){
-		this.num++;
-		var idReal = this.getId0Real();
-		this.id0 = ((idReal+123) ^ this.id1); //El 123 es para diferenciar A --> B de B--> A
-	}
-
-	objDB2Clase(objDB){
-		this.tag = objDB.tag;
-		this.iam = 'rArco';
-		this.rol = 'ARCO';
-		this.id0 = objDB.id0;
-		this.id1 = objDB.id1;
-	}
-}
-
-//------------------------------------------------------------------- Class ARCO (de Malla)
-class rARCO  extends rArco{
-	constructor(tag,nNROW,nNCOL,valor){
-		super(tag,nNROW,nNCOL);
-		this.iam = 'rARCO';
-		this.rol = 'ARCO';
-		this.valor = valor;
-	}
 	objDB2Clase(objDB){
 		super.objDB2Clase(objDB);
-		this.iam = 'rARCO';
+		this.iam = 'rArco';
 		this.rol = 'ARCO';
-		this.valor = objDB.valor;
-		this.id0I = objDB.id0I;
-		this.id0F = objDB.id0F;
+		this.idI = objDB.idI;
+		this.idF = objDB.idF;
+		this.ixI = objDB.ixI;
+		this.ixF = objDB.ixF;
 	}
 }
 
@@ -569,44 +530,43 @@ class rGrafo extends rTopol {
 	}
 
 	separaNodos(){
-		var arcos = [];
 		var nodos = [];
 		var index = [];
-
+		this.arcos = [];
+		this.iArcs = [];
 		this.nodos.map(function(nodo){
-			if (nodo.rol == 'ARCO') arcos.push(nodo);
+			if (nodo.rol == 'ARCO'){
+				this.arcos.push(nodo);
+				this.iArcs.push(nodo.id0);
+			}
 			else {
 				nodos.push(nodo);
 				index.push(nodo.id0);
 			}
-		})
+		}.bind(this))
 		this.nodos = nodos;
-		this.arcos = arcos;
 		this.index = index;
 	}
 
 	optimizaArcos(){
 		var arcos = [];
 		var idx,id0,id1,ixI,ixF;
-		this.arcos.map(function(arco,ix){
-			id0 = arco.id0;
-			id1 = arco.id1;
-		
-			ixI = this.index.indexOf(arco.getId0Real());
-			ixF = this.index.indexOf(id1);
-			
-//			console.log(id0+'->'+id1+' | '+ixI+':'+ixF);
+		this.arcos.map(function(arc){
+			console.log(utils.o2s(arc));
+			ixI = this.index.indexOf(arc.idI);
+			ixF = this.index.indexOf(arc.idF);
 
 			if (ixI >=0 && ixF >= 0) {
-				arco.nodoI = ixI;
-				arco.nodoF = ixF;
-				arcos.push(arco);
+				arc.ixI = ixI;
+				arc.ixF = ixF;
+				arcos.push(arc);
 			}
 			else (console.log('Arco sin Nodo'));
 		}.bind(this))
 		this.arcos = arcos;
 //		console.log(this.arcos.length + ' arcos');
 	}
+
 // Para tener indices separados, y que indexOf concuerde con los nodos de 'addNodo'
 // y poder detectar la existencia de un arco
 	ajustaIndices(){
@@ -621,30 +581,6 @@ class rGrafo extends rTopol {
 		}.bind(this));
 	}
 
-	cambiaIds(){
-		this.nodos.map(function(nodo,ix){
-			var ok = false;
-			while (!ok){
-				nodo.otroId(); // cambia el id0
-				if (this.index.indexOf(nodo.id0) == -1){
-					this.index[ix] = nodo.id0;
-					ok = true;
-				} 
-			}
-		}.bind(this));
-
-
-		this.arcos.map(function(arco,ix){
-			var id0I = this.index[arco.nodoI];
-			var id0F = this.index[arco.nodoF];
-			console.log('id0I:id0F ---> '+id0I+':'+id0F);
-			arco.id0 = ((id0I+123) ^ id0F); //El 123 es para diferenciar A --> B de B--> A
-			arco.id1 = id0F;
-		}.bind(this))
-	}
-
-
-	
 	getArcos(){
 		return this.arcos;
 	}
@@ -656,55 +592,55 @@ class rGrafo extends rTopol {
 	}
 
 	getArcoByIxs(ixI,ixF){
-		var id0I = this.index[ixI];
-		var id0F = this.index[ixF];
-		var id0 = ((id0I+123) ^ id0F); //El 123 es para diferenciar A --> B de B--> A
-		var arco = this.getArcoById(id0);
+		var arco = null;
+		this.arcos.map(function(arc){
+			if (arc.ixI == ixI && arc.ixF == ixF) arco == arc;
+		}.bind(this))
 		return arco;
 	}
 
 	getVecinos(nodo){
 		var veins = [];
-		this.arcos.map(function(arco){
-			var id0Arc = arco.getId0Real();
-			if (id0Arc == nodo.id0){
-				var nodoF = this.getNodoById(arco.id1);
-				var vei = {"n":nodoF,"a":arco};
+		this.arcos.map(function(arc){
+			var id0 = arc.idI;
+			if (id0 == nodo.id0){
+				var nodoF = this.getNodoById(id0);
+				var vei = {"n":nodoF,"a":arc};
 				veins.push(vei);
 			}
 		}.bind(this))
 		return veins;
 	}
 	
+	addNodoSelf(nodo){
+		super.addNodo(nodo);
+	}
 	borraNodo(nodo){
 		console.log(utils.o2s(this.index));
 		var ixNodo = this.index.indexOf(nodo.id0);
 		if (ixNodo == -1){console.log('Nodo inexistente !!'); return false;}
 		else {
-			this.nodos.splice(ixNodo,1);
 			var arcosOK = [];
 
-			var n=this.arcos.length;
+			var n = this.arcos.length;
 			for(var i=0;i<n;i++){
 				var arco = this.arcos[i];
 				console.log(ixNodo+':'+arco.nodoI+'-'+arco.nodoF);
-				if ((arco.nodoI != ixNodo) && (arco.nodoF != ixNodo)) arcosOK.push(arco);
+				if ((arco.ixI != ixNodo) && (arco.ixF != ixNodo)) arcosOK.push(arco);
 			}
+			super.borraNodo();
 			this.arcos = arcosOK;
 			this.ajustaIndices();
 			this.optimizaArcos();
 		}
 		console.log(utils.o2s(this.index));
+		console.log(utils.o2s(this.iArcs));
 	}
 
 
 	addArcoSelf(arco){
-		var idx,id0,id1,ixI,ixF;
-		id0 = arco.id0;
-		id1 = arco.id1;
-	
-		ixI = this.index.indexOf(arco.getId0Real());
-		ixF = this.index.indexOf(id1);
+		var ixI = this.index.indexOf(arco.idI);
+		var ixF = this.index.indexOf(arco.idF);
 
 		if (ixI >=0 && ixF >= 0) {
 			arco.ixI = ixI;
@@ -807,11 +743,10 @@ class rMalla extends rTopol{
 
 	optimizaArcos(){
 		this.iArcs = [];
-		this.arcos.map(function(arco){
-			var idx = arco.getId0Real();
-			arco.ixI = this.iCols.indexOf(idx);
-			arco.ixF = this.iRows.indexOf(arco.id1);
-			this.iArcs.push(arco.ixI+':'+arco.ixF);
+		this.arcos.map(function(arc){
+			arc.ixI = this.iCols.indexOf(arc.idI);
+			arc.ixF = this.iRows.indexOf(arc.idF);
+			this.iArcs.push(arc.ixI+':'+arc.ixF);
 		}.bind(this))
 	}
 
@@ -895,6 +830,6 @@ class rMalla extends rTopol{
 
 export default {
 	rMeta,rTopol,
-	rNodo,rArco,rDrag,rARCO,
+	rNodo,rArco,rDrag,
 	rConjt,rLista,rArbol,rGrafo,rMalla
 };

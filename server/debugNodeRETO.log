@@ -1,43 +1,28 @@
 App Seeds en http://localhost:3100
 Connected to Database
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET metas by iam/org: rMalla/DEMO01
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-PUT: 627c9b4f2fe46615c4702c8d
-PUT: 627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-PUT: 627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+PUT: 6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+PUT: 6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
+GET metas by iam/org: rGrafo/DEMO01
+GET by _id :6284d48ebcd6fe556e05f88b
