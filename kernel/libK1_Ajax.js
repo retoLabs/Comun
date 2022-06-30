@@ -181,6 +181,7 @@ function ecoListaTopol(xhr){
 	if (objs.length > 0){
 		if (utils.vgk.fnEco) utils.vgk.fnEco(objs);
 	}
+	
 	else {
 		alert('No hay topologias de este tipo !');
 		return;

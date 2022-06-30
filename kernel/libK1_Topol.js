@@ -594,7 +594,7 @@ class rGrafo extends rTopol {
 	getArcoByIxs(ixI,ixF){
 		var arco = null;
 		this.arcos.map(function(arc){
-			if (arc.ixI == ixI && arc.ixF == ixF) arco == arc;
+			if (parseInt(arc.ixI) == ixI && parseInt(arc.ixF) == ixF) arco = arc;
 		}.bind(this))
 		return arco;
 	}
@@ -744,8 +744,8 @@ class rMalla extends rTopol{
 	optimizaArcos(){
 		this.iArcs = [];
 		this.arcos.map(function(arc){
-			arc.ixI = this.iCols.indexOf(arc.idI);
-			arc.ixF = this.iRows.indexOf(arc.idF);
+			arc.ixI = this.iRows.indexOf(arc.idI);
+			arc.ixF = this.iCols.indexOf(arc.idF);
 			this.iArcs.push(arc.ixI+':'+arc.ixF);
 		}.bind(this))
 	}
@@ -786,15 +786,20 @@ class rMalla extends rTopol{
 	getColByIx(ix){
 		return this.ncols[ix];
 	}
+	getArcoByIxs(ixI,ixF){
+		var ixArc = this.iArcs.indexOf(''+ixI+':'+ixF);
+		return this.arcos[ixArc];
+	}
+
 	getArcos(){
 		return this.arcos;
 	}
 
 	getIxFromArco(arco){
-		var ix0 = arco.ix0;
-		var ix1 = arco.ix1;
-		var ixN = this.iArcs.indexOf(ix0+':'+ix1);
-		return ixN;
+		var ixI = arco.ixI;
+		var ixF = arco.ixF;
+		var ixArc = this.iArcs.indexOf(''+ixI+':'+ixF);
+		return ixArc;
 	}
 	borraArcoSelf(arco){
 		var ixn = this.getIxFromArco(arco);
@@ -804,9 +809,9 @@ class rMalla extends rTopol{
 	}
 
 	updtArcoSelf(arco){
-		var ixn = this.getIxFromArco(arco);
-		if (ixN == -1) {console.log('Arco '+ arco.tag +' no existe!'); return;}
-		this.arco[ixN] = arco;
+		var ixArc = this.getIxFromArco(arco);
+		if (ixArc == -1) {console.log('Arco '+ arco.tag +' no existe!'); return;}
+		this.arcos[ixArc] = arco;
 		this.regenera();
 	}
 

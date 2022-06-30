@@ -1,36 +1,25 @@
-App Seeds en http://localhost:3100
+App Stoks en http://localhost:3106
 Connected to Database
 GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
+GET by _id :62bd6d6b7861971837459fa3
 GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-PUT: 627c9b4f2fe46615c4702c8d
+GET by _id :62bd6d6b7861971837459fa3
+PUT: 62bd6d6b7861971837459fa3
+PUT: 62bd6d6b7861971837459fa3
 GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
+GET by _id :62b9789222cc2f1483429501
+GET by _id :62b9789222cc2f1483429501
+GET by _id :62bd6d6b7861971837459fa3
+PUT: 62bd6d6b7861971837459fa3
+PUT: 62bd6d6b7861971837459fa3
 GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
+GET by _id :62b9789222cc2f1483429501
+GET by _id :62b9789222cc2f1483429501
+GET by _id :62b9789222cc2f1483429501
+GET by _id :62bd6d6b7861971837459fa3
 GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
+GET by _id :62b9789222cc2f1483429501
+GET by _id :62bd6d6b7861971837459fa3
 GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :627c9b4f2fe46615c4702c8d
-DEL: 627c9b4f2fe46615c4702c8d
-GET metas by iam/org: rMalla/DEMO01
-POST
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :628f5e34a2719523658106ad
-PUT: 628f5e34a2719523658106ad
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :628f5e34a2719523658106ad
-PUT: 628f5e34a2719523658106ad
-PUT: 628f5e34a2719523658106ad
-PUT: 628f5e34a2719523658106ad
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :628f5e34a2719523658106ad
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :628f5e34a2719523658106ad
-PUT: 628f5e34a2719523658106ad
-PUT: 628f5e34a2719523658106ad
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :628f5e34a2719523658106ad
+GET by _id :62b9789222cc2f1483429501
+GET by _id :62bd6d6b7861971837459fa3
