@@ -1,25 +1,2 @@
-App Stoks en http://localhost:3106
+App Coach en http://localhost:3107
 Connected to Database
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :62bd6d6b7861971837459fa3
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :62bd6d6b7861971837459fa3
-PUT: 62bd6d6b7861971837459fa3
-PUT: 62bd6d6b7861971837459fa3
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :62b9789222cc2f1483429501
-GET by _id :62b9789222cc2f1483429501
-GET by _id :62bd6d6b7861971837459fa3
-PUT: 62bd6d6b7861971837459fa3
-PUT: 62bd6d6b7861971837459fa3
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :62b9789222cc2f1483429501
-GET by _id :62b9789222cc2f1483429501
-GET by _id :62b9789222cc2f1483429501
-GET by _id :62bd6d6b7861971837459fa3
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :62b9789222cc2f1483429501
-GET by _id :62bd6d6b7861971837459fa3
-GET metas by iam/org: rMalla/DEMO01
-GET by _id :62b9789222cc2f1483429501
-GET by _id :62bd6d6b7861971837459fa3

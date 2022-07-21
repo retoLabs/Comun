@@ -802,9 +802,9 @@ class rMalla extends rTopol{
 		return ixArc;
 	}
 	borraArcoSelf(arco){
-		var ixn = this.getIxFromArco(arco);
-		if (ixN == -1) {console.log('Arco '+ arco.tag +' no existe!'); return;}
-		this.arco.splice(ixN,1);
+		var ixArc = this.getIxFromArco(arco);
+		if (ixArc == -1) {console.log('Arco '+ arco.tag +' no existe!'); return;}
+		this.arcos.splice(ixArc,1);
 		this.regenera();
 	}
 
