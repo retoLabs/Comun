@@ -156,7 +156,7 @@ function grabaTopol(topol,eco){
 	var params = vgApp.paramsXHR;
 	params.base = '/datos/';
 	params.eco = ecoGrabaTopol; 
-	params.txt = utils.o2s(utils.vgk.topol.clase2ObjDB());
+	params.txt = utils.o2s(topol.clase2ObjDB());
 	ajaxPostTopol(params);
 }
 
@@ -183,7 +183,8 @@ function ecoListaTopol(xhr){
 	}
 	
 	else {
-		alert('No hay topologias de este tipo !');
+		console.log('No hay topologias de este tipo !');
+		if (utils.vgk.fnEco) utils.vgk.fnEco([]);
 		return;
 	}
 }

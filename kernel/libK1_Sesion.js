@@ -1,14 +1,19 @@
 /* 
-Ejemplos de valores:
+Ejemplos de valores USERS:
 _id : ADMIN_Agro | SYSTEM_Agro | 507f191e810c19729de860ea
 id0 : 0 | 1 | 1234567
 usr : admin | system | tester | pepe | enric 
 md5 : 191117e096647cc762afb345db79d2c9
 rol : ADMIN | SYSTEM | TESTS | PAGES | ....
 org : CAPOLAT | DEMO | XYZ | ...
-keo : ES | CAT | MU | ...
+keo : ES | CAT | ...
 
-En usersServer.sqlite:
+Ejemplos de valores IDIOMAS:
+cod: 'DIAS' | 'MESES' | ...
+keo: 'ES' | 'CAT' | ...
+tag: 'LUNES' | 'MARTES' | ...
+
+En usersXYZ.sqlite:
 CREATE TABLE users 
 (_id varchar(30),
 id0 number(10),
@@ -18,7 +23,35 @@ rol varchar(10),
 org varchar(10),
 keo varchar(5));
 
-En Sesiones.sqlite:
+CREATE TABLE idiomas
+(num INTEGER PRIMARY KEY AUTOINCREMENT,
+cod varchar(30),
+keo varchar(4),
+tag varchar(30)
+);
+
+insert into idiomas (num,cod,keo,tag) values (null,'DIAS','ES','Lunes');
+insert into idiomas (num,cod,keo,tag) values (null,'DIAS','ES','Martes');
+insert into idiomas (num,cod,keo,tag) values (null,'DIAS','ES','Miércoles');
+insert into idiomas (num,cod,keo,tag) values (null,'DIAS','ES','Jueves');
+insert into idiomas (num,cod,keo,tag) values (null,'DIAS','ES','Viernes');
+insert into idiomas (num,cod,keo,tag) values (null,'DIAS','ES','Sábado');
+insert into idiomas (num,cod,keo,tag) values (null,'DIAS','ES','Domingo');
+
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Enero');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Febrero');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Marzo');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Abril');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Mayo');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Junio');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Julio');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Agosto');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Septiembre');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Octubre');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Noviembre');
+insert into idiomas (num,cod,keo,tag) values (null,'MESES','ES','Diciembre');
+
+En sessXYZ.sqlite:
 CREATE TABLE sesiones 
 (sesion_id number(10) unique,
 _id varchar(30),
