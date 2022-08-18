@@ -1,35 +1,8 @@
 App Coach en http://localhost:3107
 Connected to Database
 GET metas by iam/org: rKairos/DEMO01
-GET metas by iam/org: Temario/DEMO01
+GET by _id :62fcaacdabc9590cd5c3a78f
 GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e6aca772f2f83086569825
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
+GET by _id :62fcaacdabc9590cd5c3a78f
 GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e6aca772f2f83086569825
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
-GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
-GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
-GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
-GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
-GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
-GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
-GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e8ea8e8d1cf42a67b98d5c
-GET metas by iam/org: Temario/DEMO01
-GET metas by iam/org: rKairos/DEMO01
-GET by _id :62e8ea8e8d1cf42a67b98d5c
+GET by _id :62fcaacdabc9590cd5c3a78f

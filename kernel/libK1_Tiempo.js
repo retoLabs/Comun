@@ -287,19 +287,25 @@ class rKairos extends topol.rArbol {
 		this.inicio();
 	}
 
-/*Para obtener los dias en orden creciente, ordenamos por dia del año (dJ),
+/*
+Para obtener los dias en orden creciente, ordenamos por dia absoluto:
+(jar*1000+ mm)*100 + dd. Ej: 1/2/2022 --> (2022*100+2)*100 + 1 = 20220201
 y sustituimos el array [hijos] de la raiz por los id0 de los nodos ordenados por dJ
 */
+	ddAbs(dd){
+		var jar = parseInt(dd.split('/')[2]);
+		var mes = parseInt(dd.split('/')[1]);
+		var dia = parseInt(dd.split('/')[0]);
+		return (jar*100+mes)*100 +dia;
+	}
 	sortRaspa(){
 		var sortedIds = []; 
-		console.log(this.nodos[0].hijos);
 		var nodos = this.getRaspa();
-//		console.log(utils.o2s(nodos));
-		nodos.sort((a, b) => (''+a.obj.dJ).localeCompare(''+b.obj.dJ));
+//		nodos.sort((a, b) => (''+a.obj.dJ).localeCompare(''+b.obj.dJ));
+		nodos.sort((a, b) => (this.ddAbs(a.obj.dd) < this.ddAbs(b.obj.dd)) ? -1 : 1);
 		nodos.map(function(nodo){
 			sortedIds.push(nodo.id0);
 		})
-		console.log(sortedIds);
 		var raiz = this.getRaiz();
 		raiz.hijos = sortedIds;
 	}
