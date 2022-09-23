@@ -682,8 +682,8 @@ class rGrafo extends rTopol {
 		var n = this.arcos.length;
 		for (var i=0;i<n;i++){
 			var arco = this.arcos[i];
-			var nodoI = this.nodos[arco.nodoI];
-			var nodoF = this.nodos[arco.nodoF];
+			var nodoI = this.getNodoById(arco.idI);
+			var nodoF = this.getNodoById(arco.idF);
 			var dim = {i:nodoI.dim,f:nodoF.dim};
 			dims.push(dim);
 		}
