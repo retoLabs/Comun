@@ -648,7 +648,7 @@ class rGrafo extends rTopol {
 			this.arcos.push(arco);
 			this.iArcs.push(arco.id0);
 		}
-		else (console.log('Arco sin Nodo'));
+		else (console.log(ixI,ixF,'Arco sin Nodo'));
 
 	}
 
