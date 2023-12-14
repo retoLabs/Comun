@@ -1,8 +1,5 @@
-//libK1_Clases.js
-// clases auxiliares a las topologías
-
-import utils from '/k1/libK1_Utils.js'
-import topol from '/k1/libK1_Topol.js'
+import topol from '../k1/libK1_Topol.js'
+import utils from '../k1/libK1_Utils.js'
 
 export class rUsuario extends topol.rNodo {
 	constructor(tag){
@@ -134,8 +131,11 @@ class rNota {
 	}
 
 	getInsertSQL(){
+		var org = null;
 		this.convert('FILA');
-		var org = utils.vgk.user.org;
+		if (utils.vgk.user) org = utils.vgk.user.org;
+		else org = 'DEMO01';
+		
 		console.log(this.ktg,org);
 		var stmt = null;
 		switch(this.ktg){

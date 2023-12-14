@@ -1,7 +1,22 @@
 // libK1_Trazo.js
 
-import utils  from '/k1/libK1_Utils.js'
+//import utils  from '/k1/libK1_Utils.js'
 
+/*
+La clase Trazo encapsula las funcionalidades para mostrar las '<div>' que representan los nodos,
+y capturar los eventos del mouse sobre ellas y la '<divBase>'.
+Sobre la '<divBase>' se crea un elemento '<canvas>', para trazar las lineas y flechas que se
+usan para representar un grafo.
+
+Cuando se crea Trazo, se definen las funciones que se ejecutan como respuesta a los eventos del mouse.
+Tambien se detectan las pulsaciones de teclas [Ctrl] y [Shift], para modular los eventos del mouse.
+
+Así:
+	Ctrl + mousedown sobre la divBase : nuevo nodo
+	Shift + mousedown sobre una div : editar nodo
+	Ctrl + mousedown sobre divI + mousemove + mouseup sobre divF : nuevo arco de nodoI --> nodoF
+	etc
+*/
 
 class rTrazo {
 	constructor(idBase){
@@ -40,13 +55,14 @@ class rTrazo {
 				case 17: utils.vgk.tecla = 'CTRL'; break;
 				default: return; // Quit when this doesn't handle the key event.
 			}
-//			console.log('Down:'+ utils.vgk.tecla);
 			ev.preventDefault();
 		}, true);
 
 		window.addEventListener("keyup",function(ev){
 			utils.vgk.tecla = null;
 		})
+
+		this.base.onmousedown = this.baseRatonDown.bind(this);
 	}
 
 
@@ -101,7 +117,9 @@ class rTrazo {
 	}
 	divRatonDown(ev){
 		ev.stopPropagation();
-		if (utils.vgk.tecla && this.fnKeyDivI){ this.fnKeyDivI(utils.vgk.tecla,ev.target.id);return };
+		if (utils.vgk.tecla && this.fnKeyDivI){ 
+			this.fnKeyDivI(utils.vgk.tecla,ev.target.id);return 
+		};
 		ev = ev || window.event;
 		this.drag = ev.target;
 		this.drag.style.zIndex = this.laZ++;
@@ -111,7 +129,9 @@ class rTrazo {
 		this.base.onmousemove = this.ratonMove.bind(this);
 //		this.base.onmouseup = this.ratonUp.bind(this);
 	}
+
 	baseRatonDown(ev){
+		console.log('!!!');
 //		ev.stopPropagation();
 		if (utils.vgk.tecla && this.fnKeyBase){
 			ev = ev || window.event;
@@ -223,6 +243,7 @@ class rCanvas {
 	}
 
 	setCanvas(base){
+		console.log('base:', base);
 		var canvas = document.createElement('canvas');
 		canvas.width = base.scrollWidth;
 		canvas.height = base.scrollHeight;
@@ -410,6 +431,7 @@ Para rotar un angulo 'ang':
 	   }
 
 	pintaArcos(dims){
+
 		var n = dims.length;
 		for (var i=0;i<n;i++){
 			var dim = dims[i],
@@ -421,6 +443,7 @@ Para rotar un angulo 'ang':
 				yF = dim.f.y,
 				wF = dim.f.w,
 				hF = dim.f.h;
+				console.log(dim);
 			var 
 				x0 = xI + Math.round(wI/2),
 				y0 = yI + Math.round(hI/2),

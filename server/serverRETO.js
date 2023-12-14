@@ -62,7 +62,7 @@ mongoose.connect(
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json()); 
 app.use(methodOverride());
-
+// app.get('/favicon.ico', (req, res) => res.status(204).end());
 // Import Models, Controllers and Routes
 
 var models = require('./modelRETO');

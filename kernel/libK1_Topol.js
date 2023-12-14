@@ -85,7 +85,7 @@
 */
 
 
-import utils   from '/k1/libK1_Utils.js'
+//import utils   from '/k1/libK1_Utils.js'
 
 //=================================================================== NODOS/ARCOS
 //------------------------------------------------------------------- Class Nodo
@@ -552,7 +552,6 @@ class rGrafo extends rTopol {
 		var arcos = [];
 		var idx,id0,id1,ixI,ixF;
 		this.arcos.map(function(arc){
-			console.log(utils.o2s(arc));
 			ixI = this.index.indexOf(arc.idI);
 			ixF = this.index.indexOf(arc.idF);
 

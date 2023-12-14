@@ -1,8 +1,10 @@
-import utils from '/k1/libK1_Utils.js'
+import utils from '../k1/libK1_Utils.js'
 
 function crearItem(item_t,itemx,fnGraba){
 	if (!itemx) return;
-	var keo = utils.vgk.user.keo || 'ES';
+	var keo = null;
+	if (utils.vgk.user) keo = utils.vgk.user.keo;
+	else keo = 'ES';
 	utils.vgk.appModal.item = itemx;
 	utils.vgk.appModal.conds = mkValid(itemx.iam,keo);
 	utils.vgk.appModal.edit_t = item_t || itemx.iam.toUpperCase();
@@ -15,8 +17,10 @@ function crearItem(item_t,itemx,fnGraba){
 
 function editaItem(item_t,itemx,fnGraba,fnBorra){
 	if (!itemx) return;
+	var keo = null;
 //	console.log(utils.o2s(itemx));
-	var keo =  utils.vgk.user.keo || 'ES';
+	if (utils.vgk.user) keo =  utils.vgk.user.keo || 'ES';
+	else keo = 'ES';
 	utils.vgk.appModal.item = itemx; //clonaClase(itemx);
 	utils.vgk.appModal.conds = mkValid(itemx.iam,keo);
 	utils.vgk.appModal.edit_t = item_t || itemx.iam.toUpperCase();
@@ -182,7 +186,7 @@ function initAppsGlobal(){
 
 			},
 			graba : function(){
-				if (utils.vgk.user.keo.length > 0) this.textML();
+				if (utils.vgk.user && utils.vgk.user.keo.length > 0) this.textML();
 				else if (this.fnGraba) {this.fnGraba(this.item);}
 				else alert('No hay fnGraba !!!');
 			}

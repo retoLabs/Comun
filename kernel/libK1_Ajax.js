@@ -3,7 +3,7 @@
 // Para test, se inyecta en todoJunto:
 //var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-import utils  from '/k1/libK1_Utils.js';
+import utils  from '../k1/libK1_Utils.js';
 
 function creaXHR(metodo,url,eco,async){
 	var xhr = new XMLHttpRequest();
