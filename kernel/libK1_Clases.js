@@ -61,7 +61,7 @@ export class rUsuario extends topol.rNodo {
 	El módulo de Notas permite asociar textos a una amplia variedad de objetos de la aplicación.
 	Se graban en una BDD SQLite, propia de cada aplicación.
 	
-	Lase categorías son : [NOTAS|AGEND|BITAC|TOPOL]
+	Las categorías son : [NOTAS|AGEND|BITAC|TOPOL]
 	NOTAS: Simplemente un título (tag) y un texto (txt),que puede contener links a pág webs.
 		El formato del link es ·[... url ... ·:· rótulo ]·.
 		Por ej: ·[https://www.google.com·:·Google]· se transforma en <a href="https://www.google.com" target="_blank">Google</a>
@@ -124,6 +124,101 @@ class rNota {
 				txt = txt.split('<a href="').join('·[');
 				txt = txt.split('" target="_blank">').join('·:·');
 				txt = txt.split('</a>').join(']·');
+
+		}
+		this.txt = txt;
+	}
+
+	getInsertSQL(){
+		var org = null;
+		this.convert('FILA');
+		if (utils.vgk.user) org = utils.vgk.user.org;
+		else org = 'NOORG';
+		
+		console.log(this.ktg,org);
+		var stmt = null;
+		stmt = "insert into notas ";
+		stmt += "(org,ktg,tma,tag,txt) values (";
+		stmt += "'"+org+"','"+this.ktg+"','"+this.tma+"','"+this.tag+"','"+this.txt+"');";
+		return stmt;
+	}
+	getUpdateSQL(){
+		this.convert('FILA');
+		var stmt = null;
+		stmt = "update notas set ";
+		stmt += "org='"+this.org+"',";
+		stmt += "ktg='"+this.ktg+"',";
+		stmt += "tma='"+this.tma+"',";
+		stmt += "tag='"+this.tag+"',";
+		stmt += "txt='"+this.txt+"' ";
+		stmt += "where idf="+this.idf+";";
+		return stmt;
+	}
+	getDeleteSQL(){
+		var stmt = null;
+		stmt = "delete from notas where idf="+this.idf+";";
+		return stmt;
+	}
+
+	vale(conds){
+		conds.valid.tag.ok =  utils.inputOK('TAG',this.tag);
+		return conds;
+	}
+
+}
+
+class rPost extends topol.rDrag{
+	constructor(categ,tema,tag){
+		super(tag);
+		this.iam = 'rPost';
+		this.idf = null;		// id fila en tabla notas (SQLite)
+		this._id = null;		// _id de la topologia (mongoDB)
+		this.id0 = null;		// id0 del nodo en la topología
+		this.org = null;		// org del user 
+		this.ktg = categ;		// categoría de la nota
+		this.tma = tema;		// tema de la nota
+		this.dma = null;		//fecha (d/m/a)
+		this.tag = null;			// tag de la nota
+		this.txt = null;			// texto inicial
+	}
+
+	fila2Clase(fila){
+		this.idf = fila.idf; // Ojo!! csv2filas pasa a minúsculas !!!!
+		this._id = fila._id;
+		this.id0 = fila.idf; // para SQLite !!!
+		this.org = fila.org;
+		this.ktg = fila.ktg;
+		this.tma = fila.tma;
+		this.dma = fila.dia;
+		this.tag = fila.tag;
+		this.txt = fila.txt;
+		this.convert('HTML');
+	}
+
+	convert(modo){
+		var txt = null;
+		switch(modo){
+			case 'BBDD':
+				var txt = this.txt.split('\n').join('·~');
+				break;
+			case 'EDIT':
+				var txt = this.txt.split('<br>').join('\n');
+				txt = txt.split('<a href="').join('·[');
+				txt = txt.split('" target="_blank">').join('·:·');
+				txt = txt.split('</a>').join(']·');
+				break;
+			case 'HTML':
+				var txt = this.txt.split('·~').join('<br>');
+				txt = txt.split('·!').join('|');
+				txt = txt.split('·[').join('<a href="');
+				txt = txt.split('·:·').join('" target="_blank">');
+				txt = txt.split(']·').join('</a>');
+				break;
+			case 'FILA':
+				var txt = this.txt.split('<br>').join('·~');
+				txt = txt.split('<a href="').join('·[');
+				txt = txt.split('" target="_blank">').join('·:·');
+				txt = txt.split('</a>').join(']·');
 				break;
 
 		}
@@ -134,17 +229,14 @@ class rNota {
 		var org = null;
 		this.convert('FILA');
 		if (utils.vgk.user) org = utils.vgk.user.org;
-		else org = 'DEMO01';
+		else org = 'NOORG';
 		
 		console.log(this.ktg,org);
 		var stmt = null;
-		switch(this.ktg){
-			case 'NOTAS':
-				stmt = "insert into notas ";
-				stmt += "(org,ktg,tma,tag,txt) values (";
-				stmt += "'"+org+"','"+this.ktg+"','"+this.tma+"','"+this.tag+"','"+this.txt+"');";
-				break;
-		}
+		stmt = "insert into notas ";
+		stmt += "(org,ktg,tma,tag,txt) values (";
+		stmt += "'"+org+"','"+this.ktg+"','"+this.tma+"','"+this.tag+"','"+this.txt+"');";
+
 		return stmt;
 	}
 	getUpdateSQL(){
@@ -152,6 +244,7 @@ class rNota {
 		var stmt = null;
 		switch(this.ktg){
 			case 'NOTAS':
+			case 'POSTS':
 				stmt = "update notas set ";
 				stmt += "org='"+this.org+"',";
 				stmt += "ktg='"+this.ktg+"',";
@@ -767,7 +860,7 @@ class rDiccML extends rTextosML {
 
 
 export default {
-	rNota,
+	rNota, rPost,
 	rMenuML,rDiccML,rTxtML,rTextosML,rClasesML,rKeos,rTagML,
 	NodoCalc,ArbolCalc
 }

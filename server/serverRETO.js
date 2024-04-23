@@ -5,12 +5,14 @@ var mongoose = require('mongoose');
 var methodOverride = require('method-override');
 //var cors = require('cors');
 
-//const favicon = require('express-favicon');
+//const favicon = require('serve-favicon');
+const path = require('path');
 
 var fs = require('fs');
 var util = require('util');
 
 var app = express();
+//app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'favicon.ico')));
 
 var _appRETO = process.argv[2]
 var _bddRETO = process.argv[3]
@@ -22,6 +24,7 @@ app.use("/img", express.static("./apps/"+_appRETO+"/img"));
 app.use("/lib", express.static("./Comun/libs"));
 app.use("/k1", express.static("./Comun/kernel"));
 app.use("/fonts", express.static("./Comun/fonts"));
+//app.use("/favicon.ico", express.static("./public/favicon.ico"));
 
 
 // Nota : __dirname = /home/reto/v2RETO/Comun/server

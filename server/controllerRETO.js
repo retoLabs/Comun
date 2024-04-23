@@ -21,7 +21,7 @@ exports.SQL_MySQL = function(req, res){
 	var stmt = params.stmt;
 	var usr = params.usr;
 	var pwd = params.pwd;
-	console.log('GET MySQL: '+id+' '+db+' '+stmt+' '+usr+' '+pwd);
+//	console.log('GET MySQL: '+id+' '+db+' '+stmt+' '+usr+' '+pwd);
 	var exec = require('child_process').exec;
 	function eco(error, stdout, stderr) {res.send(stdout);}
 	exec("./Comun/cgibin/k1GetQryMSQL.cgi "+id+' '+db+' '+stmt+' '+usr+' '+pwd, eco);
@@ -96,7 +96,7 @@ exports.getClima = function(req,res){
 exports.findAll = function(req, res) {
 	Datos.find({}, 'meta',function(err, topols) {
 		if(err) res.status(500).jsonp(err.message);
-		console.log('GET All metas');
+//		console.log('GET All metas');
 		res.status(200).jsonp(topols);
 	});
 };
@@ -105,7 +105,7 @@ exports.findAll = function(req, res) {
 exports.findMetas = function(req, res) {
 	Datos.find({"meta.iam":req.params.iam}, 'meta',function(err, topols) {
 		if(err) res.status(500).jsonp(err.message);
-		console.log('GET metas by iam: '+req.params.iam)
+//		console.log('GET metas by iam: '+req.params.iam)
 		res.status(200).jsonp(topols);
 	});
 };
@@ -118,7 +118,7 @@ exports.findMetas = function(req, res) {
 exports.findMetasByOrg = function(req, res) {
 	Datos.find({$and:[{"meta.iam":req.params.iam},{"meta.org":req.params.org}]}, 'meta',function(err, topols) {
 		if(err) res.status(500).jsonp(err.message);
-		console.log('GET metas by iam/org: '+req.params.iam+'/'+req.params.org);
+//		console.log('GET metas by iam/org: '+req.params.iam+'/'+req.params.org);
 		res.status(200).jsonp(topols);
 	});
 };
@@ -127,7 +127,7 @@ exports.findMetasByOrg = function(req, res) {
 exports.findById = function(req, res) {
 	Datos.findById(req.params.id, function(err, topol) {
 		if(err) return res.status(500).jsonp(err.message);
-		console.log('GET by _id :' + req.params.id);
+//		console.log('GET by _id :' + req.params.id);
 		res.status(200).jsonp(topol);
 	});
 };
@@ -140,7 +140,7 @@ exports.add = function(req, res) {
 	});
 	topol.save(function(err, topol) {
 		if(err) return res.status(500).send(err.message);
-		console.log('POST');
+//		console.log('POST');
 		res.status(200).jsonp(topol);
 	});
 };
@@ -152,7 +152,7 @@ exports.update = function(req, res) {
 		topol.nodos = req.body.nodos || [];
 		topol.save(function(err) {
 			if (err) return res.status(500).jsonp(err.message);
-			console.log('PUT: '+req.params.id);
+//			console.log('PUT: '+req.params.id);
 			res.status(200).jsonp(topol);
 		});
 	});
@@ -163,7 +163,7 @@ exports.delete = function(req, res) {
 	Datos.findById(req.params.id, function(err, topol) {
 		topol.remove(function(err) {
 			if(err) return res.status(500).jsonp(err.message);
-			console.log('DEL: '+req.params.id);
+//			console.log('DEL: '+req.params.id);
 			res.status(200).json({ message: 'Successfully deleted' });
 		});
 	 });
@@ -177,7 +177,7 @@ exports.duplica = function(req, res) {
 		topol.isNew = true;
 		topol.save(function(err) {
 			if(err) return res.status(500).jsonp(err.message);
-			console.log('DUP: '+req.params.id);
+//			console.log('DUP: '+req.params.id);
 			res.status(200).jsonp(topol);
 		});
 	 });

@@ -177,4 +177,4 @@ function inputOK(formato,texto){
 	if (regexp) return regexp.test(texto);
 	else return true;
 }
-export default {vgk,r$,rEl$,o2s,csv2filas,getParamsHTML,inputOK};
+export default {vgk,r$,rEl$,o2s,s2o,csv2filas,getParamsHTML,inputOK};

@@ -1,6 +1,6 @@
 // libK1_Trazo.js
 
-//import utils  from '/k1/libK1_Utils.js'
+import utils  from '../k1/libK1_Utils.js'
 
 /*
 La clase Trazo encapsula las funcionalidades para mostrar las '<div>' que representan los nodos,
@@ -35,7 +35,7 @@ class rTrazo {
 		this.fnKeyBase = null;		// función cuando hay una tecla y mouseDown en div Base
 		this.fnKeyDivI = null;		// función cuando hay una tecla y mouseDown en un Drag
 		this.fnKeyDivF = null;		// función cuando hay una tecla y mouseUp en un Drag
-		this.fnDblClick = null;		// no usado
+		this.fnDblClick = null;		// funcion cuando se hace dobleclick en el tag del drag
 		this.divIdIni = null;		// id del div cuando mouseDown
 		this.divIdFin = null;		// id del div cuando mouseUp
 		this.canvas = null;			// elemento <canvas>
@@ -62,7 +62,7 @@ class rTrazo {
 			utils.vgk.tecla = null;
 		})
 
-		this.base.onmousedown = this.baseRatonDown.bind(this);
+//		this.base.onmousedown = this.baseRatonDown.bind(this);
 	}
 
 
@@ -168,10 +168,12 @@ class rTrazo {
 
 		var tit = document.createElement('span');
 		tit.innerHTML = nodo.tag;
+		tit.ondblclick = this.fnDblClick.bind(this);
 		div.appendChild(tit);
 		
 		div.onmouseup = this.divRatonUp.bind(this);
 		div.onmousedown = this.divRatonDown.bind(this);
+		
 		this.base.appendChild(div);
 
 	}
